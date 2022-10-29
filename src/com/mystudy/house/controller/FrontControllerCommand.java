@@ -10,9 +10,11 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.mystudy.house.model.command.CartCommand;
 import com.mystudy.house.model.command.CartDeleteCommand;
+import com.mystudy.house.model.command.CategoryAllCommand;
 import com.mystudy.house.model.command.CategoryCommand;
 import com.mystudy.house.model.command.CategoryDtCommand;
 import com.mystudy.house.model.command.CollectionsCommand;
+import com.mystudy.house.model.command.CollectionsPCommand;
 import com.mystudy.house.model.command.Command;
 import com.mystudy.house.model.command.CommunityCommand;
 import com.mystudy.house.model.command.ExhibitionsCommand;
@@ -49,10 +51,11 @@ import com.mystudy.house.model.command.ListCommand;
 import com.mystudy.house.model.command.LoginCommand;
 import com.mystudy.house.model.command.LogoutCommand;
 import com.mystudy.house.model.command.MostbestranksCommand;
+import com.mystudy.house.model.command.MyRequestCommand;
 import com.mystudy.house.model.command.MyknowhowCommand;
-import com.mystudy.house.model.command.MyquestionsCommand;
 import com.mystudy.house.model.command.OrderCommand;
 import com.mystudy.house.model.command.OrderCompleteCommand;
+import com.mystudy.house.model.command.OrderCompletedCommand;
 import com.mystudy.house.model.command.PartnerRegisterCommand;
 import com.mystudy.house.model.command.PdetailCommand;
 import com.mystudy.house.model.command.PictureCommand;
@@ -202,6 +205,8 @@ public class FrontControllerCommand extends HttpServlet {
 		} else if(com.equals("/store.do")) {
 			command = new ListCommand();
 		// category	
+		} else if(com.equals("/categoryAll.do")) {
+			command = new CategoryAllCommand();
 		} else if(com.equals("/category.do")) {
 			command = new CategoryCommand();
 		} else if(com.equals("/categorydt.do")) {
@@ -223,10 +228,13 @@ public class FrontControllerCommand extends HttpServlet {
 			command = new MyknowhowCommand();
 		// profile 내가 쓴 질문	
 		} else if(com.equals("/myquestions.do")) {
-			command = new MyquestionsCommand();
+			command = new MyRequestCommand();
 		// 스크랩북	
 		} else if(com.equals("/collections.do")) {
 			command = new CollectionsCommand();
+		// 포스트타입별 조회	
+		} else if(com.equals("/collectionsP.do")) {
+			command = new CollectionsPCommand();
 		// 기획전 페이지 이동	
 		} else if(com.equals("/exhibitions.do")) {
 			command = new ExhibitionsCommand();
@@ -248,6 +256,9 @@ public class FrontControllerCommand extends HttpServlet {
 		// 주문완료 페이지	
 		} else if(com.equals("/complete.do")) {
 			command = new OrderCompleteCommand();
+		// 오더완료	
+		} else if(com.equals("/completed.do")) {
+			command = new OrderCompletedCommand();
 		} 
 		
 		

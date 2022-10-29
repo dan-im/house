@@ -36,6 +36,7 @@
 				    <c:if test="${vo.shipping < vo.productPrice }">
 						<span class="badge badge-secondary">무료배송</span>
 					</c:if>
+					<span class="badge badge-danger">최저가 도전</span>
 					<input type="hidden" name="productNum" value="${vo.productNum}">
 		    	</div>
 		  </div>

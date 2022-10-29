@@ -4,7 +4,7 @@ public class myscrapVO {
 
 	private int scrapNum, postIdx;
 	private String id;
-	private int postType;
+	private String postType;
 	
 	public int getScrapNum() {
 		return scrapNum;
@@ -24,18 +24,17 @@ public class myscrapVO {
 	public void setId(String id) {
 		this.id = id;
 	}
-	public int getPostType() {
+	public String getPostType() {
 		return postType;
 	}
-	public void setPostType(int postType) {
+	public void setPostType(String postType) {
 		this.postType = postType;
 	}
-	
 	@Override
 	public String toString() {
 		return "myscrapVO [scrapNum=" + scrapNum + ", postIdx=" + postIdx + ", id=" + id + ", postType=" + postType
-				+ ", getScrapNum()=" + getScrapNum() + ", getPostIdx()=" + getPostIdx() + ", getId()=" + getId()
-				+ ", getPostType()=" + getPostType() + ", getClass()=" + getClass() + ", hashCode()=" + hashCode()
-				+ ", toString()=" + super.toString() + "]";
+				+ "]";
 	}
+	
+	
 }

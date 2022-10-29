@@ -3,7 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>        
 <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
-    
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -75,41 +75,8 @@
   </style>
 </head>
 <body>
-<script>
-	$(document).ready(function(){
-		$('#self_insert').hide();
-		$('#orderRequest').on('change', function(){
-			if($("#orderRequest").val() == "4"){
-				$('#self_insert').show();
-			}else{
-				$('#self_insert').hide();
-			}
-			
-		});
-	});
-	
-	
-	$(document).ready(function(){
-		$('#point').on('change', function(){
-			if($("#point").val() > 1111){
-				alert("포인트가 부족합니다😥");
-				$('#point').value = "";
-				$('#point').focus();
-				parent.document.location.reload();
-			}
-		});
-	});
-	
-	
-	function pointuse() {
-		var myPoint = ${list.get(0).point};
-		console.log(myPoint);
-		$('#point').val(myPoint);
-		
-		var usepoint = document.getElementById('point').value;
-	}
-	
-</script>
+
+
 <div class="bg-white">
 <div class="container"><%@ include file="/WEB-INF/common/memberMenu.jspf" %></div>
 </div>
@@ -139,7 +106,7 @@
   <option value="배송 전에 미리 연락주세요">배송 전에 미리 연락주세요</option>
   <option value="부재시 경비실에 맡겨주세요">부재시 경비실에 맡겨주세요</option>
   <option value="4" id="self">직접 입력</option>
-<input type="text" placeholder="요청사항을 입력하세요" id="self_insert" style="width: 100%;">
+<input type="text" class="form-control" placeholder="요청사항을 입력하세요" id="self_insert" style="width: 100%;">
 </select>
 
 
@@ -185,7 +152,7 @@
 </c:forEach>
 <p class="oname">포인트</p>
 <hr>
-<input type="text" id="point" name="point" value="0" onchange="chagepoint()" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');">
+<input type="text" id="point" name="point" value="0" onchange="chagepoint()" onkeyup='printpoint()' oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');">
 <button type="button" class="btn btn-sm" id="btn" onclick="pointuse()">전액사용</button>
 <p>사용 가능 포인트 <span style="color: #35C5F0; font-weight: bold;">${list.get(0).point }<span>p</span></span></p>
 
@@ -194,25 +161,28 @@
 <hr>
 <div class="card mb-3" style="width: 100%;">
   <div class="row no-gutters">
-    <div class="col-md-3">
-      <img src="${pageContext.request.contextPath}/imgs/img_card.png" alt="...">
+    <div class="col-md-6 text-center">
+      <img src="${pageContext.request.contextPath}/imgs/img_card.png" alt="카드" width="100px;">
       <p style="text-align: center; size: 0.8em; color: gray;">카드</p>
     </div>
-    
-    
+    <div class="col-md-6 text-center">
+      <img src="${pageContext.request.contextPath}/imgs/img_vbank.png" alt="무통장입금" width="100px;">
+      <p style="text-align: center; size: 0.8em; color: gray;">무통장입금</p>
+    </div>
   </div>
 </div>
 
 
-
+    <c:set var="tott" value="${totalPrice+shipp}"/>
+    <c:forEach var="vo" items="${list }">
+	<c:set var= "totalPrice" value="${totalPrice + vo.totp}"/>
+	</c:forEach>
 
 <!-- ---------------------복제코드끝---------------------- -->
 </div>
 
-<c:set var = "totalPrice" value = "0" />
-    		<c:forEach var="vo" items="${list }">
-			<c:set var= "totalPrice" value="${totalPrice + vo.totp}"/>
-			</c:forEach>
+
+    		
 			<!--<c:out value="${totalPrice}"/>-->
 
 <div class="col-5">
@@ -227,11 +197,24 @@
     		</tr>
     		<tr>
     			<td style="text-align: left; padding: 0; color: gray;">배송비</td>
+    			<c:if test="${empty shipp}">
+    			<td style="text-align: right; padding: 0;">0원</td>
+    			</c:if>
+    			<c:if test="${not empty shipp}">
     			<td style="text-align: right; padding: 0;">${shipp}원</td>
+    			</c:if>
     		</tr>
     		<tr>
     			<td style="text-align: left; padding: 0; color: gray;">포인트 사용</td>
-    			<td style="text-align: right; padding: 0;">0원</td>
+    			<script>
+    			function printpoint()  {
+    				  const pointu = document.getElementById('point').value;
+    				  document.getElementById("upoint").innerText = pointu;
+    				}
+    			</script>
+    			<td style="text-align: right; padding: 0;"><span id="upoint">0</span><span>P</span></td>
+    			
+    			
     		</tr>
     	</table>
     </li>
@@ -240,7 +223,7 @@
     	<tr>
     		<td style="text-align: left; padding: 0; font-weight: bold; font-size: 1.1em;">최종 결제 금액</td>
     		<td style="text-align: right; padding: 0; font-size: 1.2em; font-weight: bold;">
-    		<span style="color:#35C5F0;">${totalPrice+shipp}</span>원<br>
+    		<span class="totalppp" style="color:#35C5F0;">${totalPrice+shipp }</span>원<br>
     		<span style="font-size: 0.6em; font-weight: normal;">
 				<c:set var= "pointp" value="${Math.ceil((totalPrice)*0.001)}"/>
     		<span style="font-weight: bold;"><fmt:parseNumber value="${pointp}" integerOnly="true" /></span>p 적립 예정</span></td>
@@ -254,9 +237,9 @@
     <input type="hidden" name="orderName" value="${list.get(0).name}">
     <input type="hidden" name="orderPhone" value="${list.get(0).phone}">
     <input type="hidden" name="orderAddr" value="${list.get(0).addr}">
-    <input type="hidden" name="totPrice" value="${totalPrice}">
-    <input type="hidden" name="pointUse" value="..">
-    <input type="hidden" name="paymentType" value="..">
+    <input type="hidden" name="totPrice" value="${totalPrice+shipp}" class="totalppp">
+    <input type="hidden" name="pointUse" value="0" id="pointUse">
+    <input type="hidden" name="paymentType" value="1">
     <c:set var="plist" value="${list }" scope="session" />
 </form>
   </ul>
@@ -268,7 +251,7 @@
 </div>
 <br>
 <button type="button" class="btn btn-lg btn-block" id="btn" style="font-weight: bold;" onclick="chk()">
-<span>${totalPrice+shipp}</span>원 결제하기</button>
+<span class="totalppp">${totalPrice+shipp}</span>원 결제하기</button>
 <script>
     function chk() {
         var f = document.thisForm;
@@ -290,5 +273,45 @@
 <br><br>
 <%@ include file="/WEB-INF/common/footer.jspf" %>
 </div>
+
+<script>
+	$(document).ready(function(){
+		$('#self_insert').hide();
+		$('#orderRequest').on('change', function(){
+			if($("#orderRequest").val() == "4"){
+				$('#self_insert').show();
+			}else{
+				$('#self_insert').hide();
+			}
+			
+		});
+	});
+	
+	
+	$(document).ready(function(){
+		$('#point').on('change', function(){
+			if($("#point").val() > ${list.get(0).point}){
+				alert("포인트가 부족합니다😥");
+				$('#point').value = "";
+				$('#point').focus();
+				parent.document.location.reload();
+			}
+			var tott = ${totalPrice+shipp};
+			$('#pointUse').val($("#point").val());
+			$('.totalppp').html(tott - $("#point").val());
+			// ${totalPrice+shipp}
+		});
+	});
+	
+	
+	function pointuse() {
+		var myPoint = ${list.get(0).point};
+		console.log(myPoint);
+		$('#point').val(myPoint);
+		var usepoint = document.getElementById('point').value;
+	}
+	
+</script>
+
 </body>
 </html>

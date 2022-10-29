@@ -66,9 +66,14 @@
 
 <div class="container">
 <div class="row">
+<c:if test="${empty list }">
+			<div class="text-center col-12">
+     			<p style="color: gray; font-size: 0.9em;">결과가 존재하지 않습니다</p>
+     		</div>	
+</c:if>
 <div class="col-1"></div>
 <div class="col-11">
-<!-- 질문답변 네비? -->
+<c:if test="${not empty list }">
 <div>
 <table style="width: 100%; margin: 0;">
 	<tr style="font-weight: bold;">
@@ -81,37 +86,34 @@
 </table>
 </div>
 <hr>
+<c:forEach items="${list }" var="vo">
 
 
-
-<div onclick="location.href='../picture/pictureDetail.jsp';" style="cursor: pointer;">
 <table style="width: 100%; margin: 0;">
 	<tr>
-		<td style="font-weight: bold; font-size: 1.1em;">제목목목~~~~</td>
+		<td style="font-weight: bold; font-size: 1.1em;">
+		<span onclick="#" style="cursor: pointer;">${vo.subject }</span>
+		</td>
 		<td rowspan="3" style="text-align: right;">
-		<img alt="질문사진" src="../imgs/qa.png" style="width: 100px; height: 100px; object-fit:cover; border-radius: 5px;">
+		<img alt="질문사진" src="${pageContext.request.contextPath}/imgs/qa.png" style="width: 100px; height: 100px; object-fit:cover; border-radius: 5px;">
 		</td>
 	</tr>
 	<tr>
-		<td style="font-size: 0.9em; color: gray;">내용~~~~~~~</td>
+		<td style="font-size: 0.9em; color: gray; width: 80%;">${vo.comments}</td>
 	</tr>
 	<tr>
 		<td style="font-size: 0.9em; color: gray;">
-		<img src="../imgs/avatar.png" alt="회원사진" width="25px;" style="border-radius: 50%;">
-		<span>아이디</span>
-		<span>글작성일 ·</span>
-		<span>댓글수 ·</span>
-		<span>조회수</span>
-		
-		<!-- 나중에 해시태그 반복문쓰기 -->
-		<span>
-		<button type="button" class="btn btn-light btn-sm">
-		<span style="color: silver;">#</span> 해시태그</button></span>
-		<!-- ===================== -->
+		<img src="${pageContext.request.contextPath}/img/profileImg/${profileImg }" alt="회원사진" width="25px;" style="border-radius: 50%;">
+		<span>${id}</span>
+		<span>${vo.regdate} ·</span>
+		<span>댓글  ·</span>
+		<span>조회 ${vo.views}</span>
 		</td>
 	</tr>
 </table>
 <hr>
+</c:forEach>
+</c:if>
 </div>
 
 
@@ -123,7 +125,6 @@
 </div>
 </div>
 
-</div>
 
 </div>
 <br><br>

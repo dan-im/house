@@ -10,6 +10,7 @@ import com.mystudy.house.model.vo.KnowhowVO;
 import com.mystudy.house.model.vo.MembersVO;
 import com.mystudy.house.model.vo.OrderCkVO;
 import com.mystudy.house.model.vo.OrderPVO;
+import com.mystudy.house.model.vo.OrderVO;
 import com.mystudy.house.model.vo.ProductVO;
 import com.mystudy.house.mybatis.DBService;
 
@@ -57,6 +58,14 @@ public class CartDAO {
 		}	
 	
 	
+	// 주문번호 받아오기
+	public static int selectOrderNum() {
+		SqlSession ss = DBService.getFactory().openSession();
+		int result = ss.selectOne("house.selectOrderNum");
+		ss.close();
+		return result;
+	}
+	
 	
 	//주문상품 개별목록
 	public static int insertOrderP(OrderPVO vo) {
@@ -64,7 +73,16 @@ public class CartDAO {
 		int result = ss.insert("house.orderpinsert", vo);
 		ss.close();
 		return result;
-	}		
+	}
+	
+	
+	//주문완료 insert
+	public static int insertOrder(OrderVO vo) {
+		SqlSession ss = DBService.getFactory().openSession(true);
+		int result = ss.insert("house.orderInsert", vo);
+		ss.close();
+		return result;
+	}
 	
 	
 	

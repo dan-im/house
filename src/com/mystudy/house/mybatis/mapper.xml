@@ -478,9 +478,6 @@ DELETE FROM PICCOMMENT WHERE PICCOM_IDX = #{idx}
 		SELECT INFO FROM GOGAK_COMMENT ORDER BY INFO DESC
 	</select>
 
-
-
-
 		
 <!-- =================== 카테고리 ============================ -->
 <select id="selectCategory" resultType="com.mystudy.house.model.vo.ProductVO">
@@ -488,15 +485,14 @@ SELECT CATEGORY_NUM, CATEGORY_NAME, CATEGORY_DETAIL FROM VW_CATEGORY
 </select>
 
 
-<!-- =================== 세부카테고리 조회 =========================== -->
-<select id="cateDetail" resultType="com.mystudy.house.model.vo.ProductVO">
+<!-- =================== 카테고리 상품 전체조회 =========================== -->
+<select id="cateAllList" resultType="com.mystudy.house.model.vo.ProductVO">
 SELECT CATEGORY_NUM, PARTNER_NUM, PRODUCT_NAME, PRODUCT_INFO, PRODUCT_PRICE,
 		STOCK, SALES, CATEGORY_DETAIL, COMPANY_NAME, COMPANY_ADDR,
 		COMPANY_PHONE, COMPANY_EMAIL, CRN, IMAGEFILE, CATEGORY_NAME,
 		SHIPPING, PRODUCT_NUM
-		FROM VW_PROIMG WHERE CATEGORY_DETAIL = #{categoryDetail}
+		FROM VW_PROIMG ORDER BY SALES DESC
 </select>
-
 
 <!-- =================== 카테고리번호로 상품 조회 =========================== -->
 <select id="cateList" resultType="com.mystudy.house.model.vo.ProductVO">
@@ -507,6 +503,14 @@ SELECT CATEGORY_NUM, PARTNER_NUM, PRODUCT_NAME, PRODUCT_INFO, PRODUCT_PRICE,
 		FROM VW_PROIMG WHERE CATEGORY_NUM = #{categoryNum} ORDER BY SALES DESC
 </select>
 
+<!-- =================== 세부카테고리 조회 =========================== -->
+<select id="cateDetail" resultType="com.mystudy.house.model.vo.ProductVO">
+SELECT CATEGORY_NUM, PARTNER_NUM, PRODUCT_NAME, PRODUCT_INFO, PRODUCT_PRICE,
+		STOCK, SALES, CATEGORY_DETAIL, COMPANY_NAME, COMPANY_ADDR,
+		COMPANY_PHONE, COMPANY_EMAIL, CRN, IMAGEFILE, CATEGORY_NAME,
+		SHIPPING, PRODUCT_NUM
+		FROM VW_PROIMG WHERE CATEGORY_DETAIL = #{categoryDetail}
+</select>
 
 <!-- =================== 세부 카테고리번호로 상품 조회 =========================== -->
 <select id="cateDtList" resultType="com.mystudy.house.model.vo.ProductVO">
@@ -583,6 +587,13 @@ SELECT KNOWHOW_IDX, ID, SUBJECT, VIEWS, THUMBNAIL, LIKE_CNT, SCRAP_CNT FROM VW_K
 SELECT PICTURE_IDX, ID, THUMBNAIL, SCRAP_CNT, C1_CNT, C2_CNT, LIKE_CNT FROM VW_PICTURE WHERE ID = #{id}
 </select>
 
+<!-- =================== 아이디로 질문과답변 조회 =========================== -->
+<select id="myRequest" parameterType="String" resultType="RequestVO">
+SELECT REQUEST_IDX, ID, SUBJECT, REGDATE, COMMENTS,
+FILENAME, ORINAME, IP, THUMBNAIL, VIEWS FROM REQUEST 
+WHERE ID = #{id} ORDER BY REGDATE DESC
+</select>
+
 
 <!-- =================== 카트에 담기 =========================== -->
 <insert id="cartInsert" parameterType="com.mystudy.house.model.vo.CartVO">
@@ -620,20 +631,33 @@ SELECT * FROM VW_ORDERCK WHERE ID = #{id}
 SELECT * FROM MYSCRAP WHERE ID = #{id}
 </select>
 
+<!-- =================== 포스트타입으로 게시글 조회 =========================== -->
+<select id="myscrapP" parameterType="String" resultType="myscrapVO">
+SELECT * FROM MYSCRAP WHERE ID = #{id} AND POST_TYPE = #{postType}
+</select>
 
 
+<select id="selectOrderNum" resultType="int">
+SELECT ORDER_SEQ.CURRVAL FROM dual
+</select>
 
 <!-- =================== 카트에 있던 상품 주문완료되면 넘기기(insert) =========================== -->
-<insert id="orderpinsert" parameterType="java.util.List">
+<insert id="orderpinsert" parameterType="com.mystudy.house.model.vo.OrderPVO">
     INSERT INTO ORDER_PRODUCT (ORDERP_NUM, ORDER_NUM, PRODUCT_NUM, COUNT, SHIPPING_STATUS)
     VALUES
-    <foreach collection="list" item="vo" separator=",">
-        (ORDERP_SEQ.NEXTVAL, #{vo.orderNum}, #{vo.productNum},#{vo.count}, "결제완료")
-    </foreach>
+    (ORDERP_SEQ.NEXTVAL, #{orderNum}, #{productNum},#{count}, '결제완료')
+   
 </insert>
 
 <!-- =================== 배송정보 넘기기(insert) =========================== -->
-
+<insert id="orderInsert" parameterType="com.mystudy.house.model.vo.OrderVO">
+INSERT INTO ORDERS	
+(ORDER_NUM, ID, ORDER_NAME, ORDER_PHONE, ORDER_ADDR,
+ORDER_REQUEST, TOT_PRICE, REGDATE, POINT_USE, PAYMENT_TYPE,
+SHIPPING_STATUS)
+VALUES (ORDER_SEQ.NEXTVAL, #{id}, #{orderName}, #{orderPhone}, #{orderAddr},
+#{orderRequest}, #{totPrice}, SYSDATE, #{pointUse}, #{paymentType}, '결제완료')
+</insert>
 
 
 

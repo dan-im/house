@@ -69,40 +69,6 @@
 </head>
 <body>
 
-<script>
-	$(document).ready(function(){
-		$('#allck').on('click', function(){
-			if($(this).prop('checked')){
-				$('#productck').prop("checked",true);
-			}else{
-				$('#productck').prop("checked",false);
-			}
-			
-		});
-	});
-	
-	
-	//수량선택 수정
-	function chageLangSelect(){
-    var langSelect = document.getElementById("selectbox");
-     
-    // select element에서 선택된 option의 value가 저장된다.
-    var selectValue = langSelect.options[langSelect.selectedIndex].value;
- 
-    // select element에서 선택된 option의 text가 저장된다.
-    var selectText = langSelect.options[langSelect.selectedIndex].text;
-    
-    console.log("selectText: " + selectText);
-    console.log("productNum: " );
-    
-    location.href ="cartChange.do?ProductNum="+${list.get(status.current).productNum}+"&count="+selectText;
-    
-	}
-	
-</script>
-
-
-
 <div class="bg-white">
 <div class="container"><%@ include file="/WEB-INF/common/memberMenu.jspf" %></div>
 </div>
@@ -126,7 +92,9 @@
 	<table style="width: 58%">
 		<tr>
 			<td><input class="form-check-input" type="checkbox" value="1" id="allck"> 모두선택</td>
-			<td style="text-align: right; font-size: 0.8em;"><a href="#" style="color: gray;"><span>선택삭제</span></a></td>
+			<td style="text-align: right; font-size: 0.8em;">
+			<a href="#" style="color: gray;"><span>선택삭제</span></a>
+			</td>
 		</tr>
 	</table>
 </div>
@@ -182,7 +150,7 @@
     		<td style="text-align: right; cursor: pointer;"><i class="bi bi-x-lg" data-toggle="modal" data-target="#exampleModal"></i>
     	</tr>
     	<tr>
-    		<td> <select id="selectbox" name="cnt" onchange="chageLangSelect()">
+    		<td> <select id="selectbox" name="cnt" onchange="chageLangSelect(${vo.productNum}, this.value)">
             <option value= ${vo.count } selected>${vo.count }</option>
             <option value= 1>1</option>
             <option value= 2>2</option>
@@ -210,7 +178,7 @@
     <c:if test="${vo.shipping > vo.totp }">
     	<c:set var= "shipp" value="${shipp + 3000}"/>
     	배송비 3000원<br>
-   		묶음배송 ${vo.shipping - vo.totp }원 이상 추가시 무료배송
+   		${vo.shipping - vo.totp }원 이상 추가시 무료배송
     </c:if>
     </li>
   </ul>
@@ -265,5 +233,37 @@
 <br><br>
 <%@ include file="/WEB-INF/common/footer.jspf" %>
 </div>
+</div>
+<script>
+	$(document).ready(function(){
+		$('#allck').on('click', function(){
+			if($(this).prop('checked')){
+				$('#productck').prop("checked",true);
+			}else{
+				$('#productck').prop("checked",false);
+			}
+			
+		});
+	});
+	
+	
+	//수량선택 수정
+	function chageLangSelect(a , b){
+    var langSelect = document.getElementById("selectbox");
+     
+    // select element에서 선택된 option의 value가 저장된다.
+    var selectValue = langSelect.options[langSelect.selectedIndex].value;
+ 
+    // select element에서 선택된 option의 text가 저장된다.
+    var selectText = langSelect.options[langSelect.selectedIndex].text;
+    
+    console.log("selectText: " + b);
+    console.log("productNum: " + a);
+    
+    location.href ="cartChange.do?ProductNum="+a+"&count="+b;
+    
+	}
+	
+</script>
 </body>
 </html>

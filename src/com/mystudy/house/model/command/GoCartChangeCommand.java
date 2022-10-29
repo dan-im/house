@@ -26,7 +26,16 @@ public class GoCartChangeCommand implements Command {
 		
 		CartDAO.changeCount(vo);
 		
-		return "/cart.do";
+		
+		java.io.PrintWriter out = response.getWriter();
+		out.println("<html><form name='frm' action='cart.do' method='post'>");
+		out.println("</form></html>");
+		out.println("<script>frm.submit();</script>");
+		out.close();
+		       
+		return null;
+		
+		// return "cart.do"
 	}
 
 }

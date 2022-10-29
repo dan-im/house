@@ -18,6 +18,15 @@ public class ProductDAO {
 			ss.close();
 			return list;
 		}
+		
+		
+		//카테고리 첫화면(상품전체조회)
+		public static List<ProductVO> cateAllList(){
+			SqlSession ss = DBService.getFactory().openSession();
+			List<ProductVO> list = ss.selectList("house.cateAllList");
+			ss.close();
+			return list;
+		}
 	
 		//상품 카드 조회
 		public static List<ProductVO> cardList(){

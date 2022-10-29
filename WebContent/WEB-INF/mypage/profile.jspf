@@ -9,10 +9,10 @@
       <a class="nav-link best" id="knowhow" href="myknowhow.do?id=${id}">노하우</a>
     </li>
     <li class="nav-item">
-      <a class="nav-link discount" id="qa" href="myquestions.do">질문과답변</a>
+      <a class="nav-link discount" id="qa" href="myquestions.do?id=${id}">질문과답변</a>
     </li>
     <li class="nav-item">
-      <a class="nav-link discount" id="collections" href="collections.do">스크랩북</a>
+      <a class="nav-link discount" id="collections" href="collections.do?id=${id}">스크랩북</a>
     </li>
   </ul>
 </nav>

@@ -14,8 +14,9 @@ import com.mystudy.house.model.dao.ProductDAO;
 import com.mystudy.house.model.vo.CartviewVO;
 import com.mystudy.house.model.vo.KnowhowVO;
 import com.mystudy.house.model.vo.ProductVO;
+import com.mystudy.house.model.vo.RequestVO;
 
-public class MyknowhowCommand implements Command {
+public class MyRequestCommand implements Command {
 
 	@Override
 	public String exec(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -24,14 +25,14 @@ public class MyknowhowCommand implements Command {
 		String id = (String) session.getAttribute("id");
 		
 		//2. DB연결하고 데이터 가져오기
-		List<KnowhowVO> list = MypageDAO.myKnowhow(id);
+		List<RequestVO> list = MypageDAO.myRequest(id);
 		
 		//3. 데이터를 응답할 페이지에 전달
 		request.setAttribute("list", list);
 		
 		//4. 페이지 전환 - 응답할 페이지(list.jsp)
 		
-		return "/WEB-INF/mypage/knowhow.jsp";
+		return "/WEB-INF/mypage/questions.jsp";
 	}
 
 }

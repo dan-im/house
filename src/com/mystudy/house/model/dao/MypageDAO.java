@@ -11,6 +11,7 @@ import com.mystudy.house.model.vo.PicscrapVO;
 import com.mystudy.house.model.vo.PictureVO;
 import com.mystudy.house.model.vo.ProductImgVO;
 import com.mystudy.house.model.vo.ProductVO;
+import com.mystudy.house.model.vo.RequestVO;
 import com.mystudy.house.model.vo.myscrapVO;
 import com.mystudy.house.mybatis.DBService;
 
@@ -34,6 +35,14 @@ public class MypageDAO {
 			return list;
 		}
 		
+		// 아이디로 질문과답변 조회
+		public static List<RequestVO> myRequest(String id) {
+			SqlSession ss = DBService.getFactory().openSession();
+			List<RequestVO> list = ss.selectList("house.myRequest", id);
+			ss.close();
+			return list;
+		}
+		
 		// 아이디로 스크랩 전체 조회
 		public static List<myscrapVO> myscrap(String id) {
 			SqlSession ss = DBService.getFactory().openSession();
@@ -42,6 +51,18 @@ public class MypageDAO {
 			return list;
 		}
 		
+		// 아이디, 포스트타입으로 글 전체 조회
+		public static List<myscrapVO> myscrapP(String id, String postType) {
+			SqlSession ss = DBService.getFactory().openSession();
+			List<myscrapVO> list = ss.selectList("house.myscrapP", postType);
+			ss.close();
+			return list;
+		}
 
+		
+		
+		
+		
+		
 	
 }

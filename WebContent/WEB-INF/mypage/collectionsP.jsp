@@ -54,8 +54,8 @@ function getCheckboxValue(event)  {
 <b class="bordname"> ${id }</b><br>
 <br><br>
 
-<b class="bordname" style="margin: 10px; cursor: pointer; color: #35C5F0;" onclick="location.href='collections.do'">모두</b>
-<b class="bordname" style="margin: 10px; cursor: pointer;" onclick="location.href='collectionsP.do?id=${id}&postType=0'">사진</b>
+<b class="bordname" style="margin: 10px; cursor: pointer;" onclick="location.href='collections.do'">모두</b>
+<b class="bordname" style="margin: 10px; cursor: pointer; color: #35C5F0;" onclick="location.href='collectionsP.do?postType=0'">사진</b>
 <b class="bordname" style="margin: 10px; cursor: pointer;" onclick="location.href='collectionsP.do?postType=1'">노하우</b>
 
 
