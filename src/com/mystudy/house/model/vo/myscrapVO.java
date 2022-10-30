@@ -4,7 +4,7 @@ public class myscrapVO {
 
 	private int scrapNum, postIdx;
 	private String id;
-	private String postType;
+	private int postType;
 	
 	public int getScrapNum() {
 		return scrapNum;
@@ -24,10 +24,10 @@ public class myscrapVO {
 	public void setId(String id) {
 		this.id = id;
 	}
-	public String getPostType() {
+	public int getPostType() {
 		return postType;
 	}
-	public void setPostType(String postType) {
+	public void setPostType(int postType) {
 		this.postType = postType;
 	}
 	@Override

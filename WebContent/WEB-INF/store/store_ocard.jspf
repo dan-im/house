@@ -30,9 +30,16 @@
 						<a href="pdetail.do?productNum=${vo.productNum}" class="stretched-link"> <!-- 회사이름 --> 
 							<a class="company" href="#">${vo.companyName }</a> <!-- 제품명 -->
 								<p class="p_name">${vo.productName}</p>
+									<c:if test="${vo.stock==0}">
+								<p class="p_price">
+									일시품절
+								</p>
+								</c:if>
+								<c:if test="${vo.stock != 0}">
 								<p class="p_price">
 									<fmt:formatNumber value="${vo.productPrice }" pattern="#,###" />
 								</p> 
+								</c:if>
 								<c:if test="${vo.shipping < vo.productPrice }">
 									<span class="badge badge-secondary">무료배송</span>
 								</c:if> 

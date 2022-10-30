@@ -27,7 +27,6 @@ public class CartCommand implements Command {
 		request.setAttribute("list", list);
 		
 		//4. 페이지 전환 - 응답할 페이지(list.jsp)
-		
 		return "/WEB-INF/cart/cart.jsp";
 	}
 

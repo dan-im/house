@@ -14,6 +14,7 @@ import com.mystudy.house.model.command.CategoryAllCommand;
 import com.mystudy.house.model.command.CategoryCommand;
 import com.mystudy.house.model.command.CategoryDtCommand;
 import com.mystudy.house.model.command.CollectionsCommand;
+import com.mystudy.house.model.command.CollectionsKCommand;
 import com.mystudy.house.model.command.CollectionsPCommand;
 import com.mystudy.house.model.command.Command;
 import com.mystudy.house.model.command.CommunityCommand;
@@ -21,6 +22,7 @@ import com.mystudy.house.model.command.ExhibitionsCommand;
 import com.mystudy.house.model.command.GoCartChangeCommand;
 import com.mystudy.house.model.command.GoCartInsertCommand;
 import com.mystudy.house.model.command.GoIdFindCommand;
+import com.mystudy.house.model.command.GoInfoAddrCommand;
 import com.mystudy.house.model.command.GoInfoConfirmCommand;
 import com.mystudy.house.model.command.GoInfoEditCommand;
 import com.mystudy.house.model.command.GoKnowhowEditCommand;
@@ -51,11 +53,13 @@ import com.mystudy.house.model.command.ListCommand;
 import com.mystudy.house.model.command.LoginCommand;
 import com.mystudy.house.model.command.LogoutCommand;
 import com.mystudy.house.model.command.MostbestranksCommand;
+import com.mystudy.house.model.command.MyAnswerCommand;
 import com.mystudy.house.model.command.MyRequestCommand;
 import com.mystudy.house.model.command.MyknowhowCommand;
 import com.mystudy.house.model.command.OrderCommand;
 import com.mystudy.house.model.command.OrderCompleteCommand;
 import com.mystudy.house.model.command.OrderCompletedCommand;
+import com.mystudy.house.model.command.OrderOneCommand;
 import com.mystudy.house.model.command.PartnerRegisterCommand;
 import com.mystudy.house.model.command.PdetailCommand;
 import com.mystudy.house.model.command.PictureCommand;
@@ -211,7 +215,7 @@ public class FrontControllerCommand extends HttpServlet {
 			command = new CategoryCommand();
 		} else if(com.equals("/categorydt.do")) {
 			command = new CategoryDtCommand();
-		// bestranks 실시간베스트 구현중
+		// bestranks 실시간베스트
 		} else if(com.equals("/bestranks.do")) {
 			command = new bestranksCommand();
 		// mostbest	역대베스트
@@ -229,12 +233,18 @@ public class FrontControllerCommand extends HttpServlet {
 		// profile 내가 쓴 질문	
 		} else if(com.equals("/myquestions.do")) {
 			command = new MyRequestCommand();
+		// profile 내가 쓴 답변	
+		} else if(com.equals("/myanswer.do")) {
+			command = new MyAnswerCommand();
 		// 스크랩북	
 		} else if(com.equals("/collections.do")) {
 			command = new CollectionsCommand();
-		// 포스트타입별 조회	
+		// 사진 스크랩 조회
 		} else if(com.equals("/collectionsP.do")) {
 			command = new CollectionsPCommand();
+		// 노하우 스크랩 조회	
+		} else if(com.equals("/collectionsK.do")) {
+			command = new CollectionsKCommand();
 		// 기획전 페이지 이동	
 		} else if(com.equals("/exhibitions.do")) {
 			command = new ExhibitionsCommand();
@@ -253,6 +263,12 @@ public class FrontControllerCommand extends HttpServlet {
 		// 주문하기 이동	
 		} else if(com.equals("/order.do")) {
 			command = new OrderCommand();
+		// 바로 주문 이동	
+		} else if(com.equals("/orderOne.do")) {
+			command = new OrderOneCommand();
+		// 배송정보 수정	
+		} else if(com.equals("/orderAddr.do")) {
+			command = new GoInfoAddrCommand();
 		// 주문완료 페이지	
 		} else if(com.equals("/complete.do")) {
 			command = new OrderCompleteCommand();

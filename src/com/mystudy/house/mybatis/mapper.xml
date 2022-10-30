@@ -540,6 +540,19 @@ SELECT PRODUCT_NUM, CATEGORY_NUM, PARTNER_NUM, PRODUCT_NAME, PRODUCT_INFO,
 </select>
 
 
+<!-- =================== 실시간베스트 =========================== -->
+<select id="tbestCard" resultType="com.mystudy.house.model.vo.ProductVO">
+SELECT V.PRODUCT_NUM, V.IMAGEFILE, V.COMPANY_NAME,  V.PRODUCT_NAME,
+V.PRODUCT_PRICE, V.SHIPPING,V.STOCK, SUM(COUNT) AS TCOUNT
+FROM VW_PROIMG V INNER JOIN ORDER_ALL O
+ON V.PRODUCT_NUM = O.PRODUCT_NUM
+WHERE TO_CHAR(O.REGDATE, 'YYYYMMDD' ) = TO_CHAR(SYSDATE, 'YYYYMMDD')
+GROUP BY V.PRODUCT_NUM, V.IMAGEFILE, V.COMPANY_NAME,  V.PRODUCT_NAME,
+V.PRODUCT_PRICE, V.SHIPPING, V.STOCK
+ORDER BY TCOUNT DESC
+</select>
+
+
 <!-- =================== 낮은가격순조회 =========================== -->
 <select id="rowprice" resultType="com.mystudy.house.model.vo.ProductVO">
 SELECT PRODUCT_NUM, CATEGORY_NUM, PARTNER_NUM, PRODUCT_NAME, PRODUCT_INFO,
@@ -587,11 +600,18 @@ SELECT KNOWHOW_IDX, ID, SUBJECT, VIEWS, THUMBNAIL, LIKE_CNT, SCRAP_CNT FROM VW_K
 SELECT PICTURE_IDX, ID, THUMBNAIL, SCRAP_CNT, C1_CNT, C2_CNT, LIKE_CNT FROM VW_PICTURE WHERE ID = #{id}
 </select>
 
-<!-- =================== 아이디로 질문과답변 조회 =========================== -->
+<!-- =================== 아이디로 내가 쓴 질문 조회 =========================== -->
 <select id="myRequest" parameterType="String" resultType="RequestVO">
 SELECT REQUEST_IDX, ID, SUBJECT, REGDATE, COMMENTS,
 FILENAME, ORINAME, IP, THUMBNAIL, VIEWS FROM REQUEST 
 WHERE ID = #{id} ORDER BY REGDATE DESC
+</select>
+
+<!-- =================== 아이디로 내가 쓴 답변글 조회 =========================== -->
+<select id="myAnswer" parameterType="String" resultType="RequestVO">
+SELECT REQUEST_IDX, ID, SUBJECT, REGDATE, COMMENTS, THUMBNAIL, VIEWS, MYID  FROM ANSWER
+WHERE MYID = #{id}
+GROUP BY REQUEST_IDX, ID, SUBJECT, REGDATE, COMMENTS, THUMBNAIL, VIEWS, MYID
 </select>
 
 
@@ -632,7 +652,7 @@ SELECT * FROM MYSCRAP WHERE ID = #{id}
 </select>
 
 <!-- =================== 포스트타입으로 게시글 조회 =========================== -->
-<select id="myscrapP" parameterType="String" resultType="myscrapVO">
+<select id="myscrapP" resultType="myscrapVO" parameterType="myscrapVO">
 SELECT * FROM MYSCRAP WHERE ID = #{id} AND POST_TYPE = #{postType}
 </select>
 
@@ -643,9 +663,9 @@ SELECT ORDER_SEQ.CURRVAL FROM dual
 
 <!-- =================== 카트에 있던 상품 주문완료되면 넘기기(insert) =========================== -->
 <insert id="orderpinsert" parameterType="com.mystudy.house.model.vo.OrderPVO">
-    INSERT INTO ORDER_PRODUCT (ORDERP_NUM, ORDER_NUM, PRODUCT_NUM, COUNT, SHIPPING_STATUS)
+    INSERT INTO ORDER_PRODUCT (ORDERP_NUM, ORDER_NUM, PRODUCT_NUM, COUNT, SHIPPING_STATUS, ID)
     VALUES
-    (ORDERP_SEQ.NEXTVAL, #{orderNum}, #{productNum},#{count}, '결제완료')
+    (ORDERP_SEQ.NEXTVAL, #{orderNum}, #{productNum},#{count}, '결제완료', #{id})
    
 </insert>
 
@@ -654,9 +674,9 @@ SELECT ORDER_SEQ.CURRVAL FROM dual
 INSERT INTO ORDERS	
 (ORDER_NUM, ID, ORDER_NAME, ORDER_PHONE, ORDER_ADDR,
 ORDER_REQUEST, TOT_PRICE, REGDATE, POINT_USE, PAYMENT_TYPE,
-SHIPPING_STATUS)
+SHIPPING_STATUS, ADD_POINT)
 VALUES (ORDER_SEQ.NEXTVAL, #{id}, #{orderName}, #{orderPhone}, #{orderAddr},
-#{orderRequest}, #{totPrice}, SYSDATE, #{pointUse}, #{paymentType}, '결제완료')
+#{orderRequest}, #{totPrice}, SYSDATE, #{pointUse}, #{paymentType}, '결제완료', #{addPoint})
 </insert>
 
 

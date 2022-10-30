@@ -70,7 +70,8 @@
 <body>
 
 <div class="bg-white">
-<div class="container"><%@ include file="/WEB-INF/common/memberMenu.jspf" %></div>
+<div class="container">
+<%@ include file="/WEB-INF/common/memberMenu.jspf" %></div>
 </div>
 <div class="container">
 <div class="form-check">
@@ -89,14 +90,7 @@
 </c:if>
 
 <c:if test="${not empty list}">
-	<table style="width: 58%">
-		<tr>
-			<td><input class="form-check-input" type="checkbox" value="1" id="allck"> 모두선택</td>
-			<td style="text-align: right; font-size: 0.8em;">
-			<a href="#" style="color: gray;"><span>선택삭제</span></a>
-			</td>
-		</tr>
-	</table>
+<br>
 </div>
 
 <div class="container">
@@ -110,7 +104,7 @@
     <li class="list-group-item">
     <table style="width: 100%;">
     	<tr>
-    		<td style="vertical-align: top;"><input class="form-check-input" type="checkbox" value="0" id="productck"></td>
+    		<td style="vertical-align: top;"><p></p></td>
     		<td style="text-align: right; cursor: pointer;"><i class="bi bi-x-lg" data-toggle="modal" data-target="#exampleModal${status.index }"></i>
 
 <!-- Modal -->
@@ -121,7 +115,7 @@
         <p> 이 상품을 삭제하겠습니까?</p>
         <form action="cartDelete.do" method="post">
         <button type="button" class="btn btn-outline-secondary" data-dismiss="modal" style="width: 100px;">취소</button>
-        <input type="submit" class="btn btn-primary" value="삭제" style="width: 100px;">
+        <input type="submit" class="btn" id="btn" value="삭제" style="width: 100px;">
         <input type="hidden" name="productNum" value="${vo.productNum}">
         </form>
         <br>
@@ -150,7 +144,7 @@
     		<td style="text-align: right; cursor: pointer;"><i class="bi bi-x-lg" data-toggle="modal" data-target="#exampleModal"></i>
     	</tr>
     	<tr>
-    		<td> <select id="selectbox" name="cnt" onchange="chageLangSelect(${vo.productNum}, this.value)">
+    		<td> <select id="selectbox" name="cnt" onchange="chageLangSelect(${vo.productNum}, this.value, ${vo.stock}, ${vo.count })">
             <option value= ${vo.count } selected>${vo.count }</option>
             <option value= 1>1</option>
             <option value= 2>2</option>
@@ -248,7 +242,7 @@
 	
 	
 	//수량선택 수정
-	function chageLangSelect(a , b){
+	function chageLangSelect(a , b, c, d){
     var langSelect = document.getElementById("selectbox");
      
     // select element에서 선택된 option의 value가 저장된다.
@@ -259,6 +253,12 @@
     
     console.log("selectText: " + b);
     console.log("productNum: " + a);
+    
+    if(b > c){
+    	alert("구매가능 수량을 초과하였습니다😥");
+    	return location.href ="cartChange.do?ProductNum="+a+"&count="+d;
+    }
+    
     
     location.href ="cartChange.do?ProductNum="+a+"&count="+b;
     

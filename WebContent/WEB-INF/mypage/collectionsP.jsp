@@ -1,7 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ page import="java.util.Date" %>
-<%@ page import="java.text.SimpleDateFormat" %>    
 <!DOCTYPE html>
 <html>
 <head>
@@ -50,13 +48,12 @@ function getCheckboxValue(event)  {
 
 <b class="bordname" style="margin-left: 10px;">스크랩북</b><br>
 <div class="myinfo" style="text-align: center;">
-<img alt="프로필사진" src="${pageContext.request.contextPath}/img/profileImg/${profileImg }" style="width: 10%; border-radius: 50%;"><br><br>
+<img alt="프로필사진" src="${pageContext.request.contextPath}/img/profileImg/${profileImg }" style="width: 10%; border-radius: 50%; aspect-ratio: 1/1;"><br><br>
 <b class="bordname"> ${id }</b><br>
 <br><br>
-
 <b class="bordname" style="margin: 10px; cursor: pointer;" onclick="location.href='collections.do'">모두</b>
-<b class="bordname" style="margin: 10px; cursor: pointer; color: #35C5F0;" onclick="location.href='collectionsP.do?postType=0'">사진</b>
-<b class="bordname" style="margin: 10px; cursor: pointer;" onclick="location.href='collectionsP.do?postType=1'">노하우</b>
+<b class="bordname" style="margin: 10px; cursor: pointer; color: #35C5F0;" onclick="location.href='collectionsP.do?id=${id}&postType=0'">사진</b>
+<b class="bordname" style="margin: 10px; cursor: pointer;" onclick="location.href='collectionsK.do?id=${id}&postType=1'">노하우</b>
 
 
 </div>

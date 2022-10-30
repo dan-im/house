@@ -6,77 +6,77 @@
 <meta charset="UTF-8">
 <title>${vo.productName }</title>
 <style>
-#myform fieldset{
-    display: inline-block;
-    direction: rtl;
-    border:0;
+.star-ratings {
+  color: #aaa9a9; 
+  position: relative;
+  unicode-bidi: bidi-override;
+  width: max-content;
+  -webkit-text-fill-color: gray; /* Will override color (regardless of order) */
+  -webkit-text-stroke-color: gray;
+   top: -5%;
+	left: 50%;
+	transform: translate(-50%,0%)
+  
 }
-#myform fieldset legend{
-    text-align: right;
+ 
+.star-ratings-fill {
+  color: #fff58c;
+  padding: 0;
+  position: absolute; 
+  z-index: 1;
+  display: flex;
+  overflow: hidden;
+  -webkit-text-fill-color: #35C5F0;
 }
-#myform input[type=radio]{
-    display: none;
+ 
+.star-ratings-base {
+  z-index: 0;
+  padding: 0;
 }
-#myform label{
-    font-size: 1.3em;
-    color: transparent;
-    text-shadow: 0 0 0 #f0f0f0;
+
+table {
+	position: relative;
 }
-#myform label:hover{
-    text-shadow: 0 0 0 rgba(53, 197, 240, 0.99);
-}
-#myform label:hover ~ label{
-    text-shadow: 0 0 0 rgba(53, 197, 240, 0.99);
-}
-#myform input[type=radio]:checked ~ label{
-    text-shadow: 0 0 0 rgba(53, 197, 240, 0.99);
-}
-#reviewContents {
-    width: 100%;
-    height: 150px;
-    padding: 10px;
-    box-sizing: border-box;
-    border: solid 1.5px #D3D3D3;
-    border-radius: 5px;
-    font-size: 15px;
-    resize: none;
-}
+
 </style>
 
 </head>
 <body>
 <script>
-	
+ratingToPercent() {
+    const score = 1 * 20;
+    return score + 1.5;
+}	
 </script>
 
-
-	<div class="card mb-3">
-		<div class="row no-gutters">
-			<div class="col-md-4">
-				<form class="mb-3" name="myform" id="myform" method="post">
-	<fieldset>
-		<!--  <span class="text-bold">별점을 선택해주세요</span>-->
-		<input type="radio" name="reviewStar" value="5" id="rate1"><label
-			for="rate1">★</label>
-		<input type="radio" name="reviewStar" value="4" id="rate2"><label
-			for="rate2">★</label>
-		<input type="radio" name="reviewStar" value="3" id="rate3"><label
-			for="rate3">★</label>
-		<input type="radio" name="reviewStar" value="2" id="rate4"><label
-			for="rate4">★</label>
-		<input type="radio" name="reviewStar" value="1" id="rate5"><label
-			for="rate5">★</label>
-	</fieldset>
-</form>					
-			</div>
-			<div class="col-md-8">
-				<div class="card-body">
-					<p class="card-text">별점내용~</p>
-					<p class="card-text">
-					</p>
-				</div>
-			</div>
-		</div>
+	
+	<table style="width: 100%; height:150px; text-align: center; background-color:#F6F6F6; border-radius: 10px;">
+	<tr>
+	<td style="width: 30%; font-size: 2em; font-weight: bold;">
+	1 / 5
+	</td>
+	<td>
+	<div class="star-ratings">
+	<div class="star-ratings-fill space-x-2 text-lg" style="width: 20%; font-size: 4em; text-align: center;">
+		<span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
 	</div>
+	<div class="star-ratings-base space-x-2 text-lg" style="font-size: 4em; text-align:center;">
+		<span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+	</div>
+</div>
+	</td>
+	</tr>
+	</table>
+<hr>	
+<table style="width: 100%; margin: 0;">
+	<tr>
+		<td>리뷰~~</td>
+	</tr>
+</table>
+<hr>	
+
+
+
+
 </body>
 </html>

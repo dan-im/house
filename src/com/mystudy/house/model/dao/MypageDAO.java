@@ -35,10 +35,18 @@ public class MypageDAO {
 			return list;
 		}
 		
-		// 아이디로 질문과답변 조회
+		// 아이디로 내가 쓴 질문 조회
 		public static List<RequestVO> myRequest(String id) {
 			SqlSession ss = DBService.getFactory().openSession();
 			List<RequestVO> list = ss.selectList("house.myRequest", id);
+			ss.close();
+			return list;
+		}
+		
+		// 아이디로 내가 쓴 답변  조회
+		public static List<RequestVO> myAnswer(String id) {
+			SqlSession ss = DBService.getFactory().openSession();
+			List<RequestVO> list = ss.selectList("house.myAnswer", id);
 			ss.close();
 			return list;
 		}
@@ -52,9 +60,9 @@ public class MypageDAO {
 		}
 		
 		// 아이디, 포스트타입으로 글 전체 조회
-		public static List<myscrapVO> myscrapP(String id, String postType) {
+		public static List<myscrapVO> myscrapP(myscrapVO vo) {
 			SqlSession ss = DBService.getFactory().openSession();
-			List<myscrapVO> list = ss.selectList("house.myscrapP", postType);
+			List<myscrapVO> list = ss.selectList("house.myscrapP", vo);
 			ss.close();
 			return list;
 		}

@@ -37,6 +37,14 @@ public class ProductDAO {
 		}
 		
 		
+		//실시간 베스트 상품 조회
+		public static List<ProductVO> todaybestList(){
+			SqlSession ss = DBService.getFactory().openSession();
+			List<ProductVO> list = ss.selectList("house.tbestCard");
+			ss.close();
+			return list;
+		}
+		
 		//베스트 상품 조회
 		public static List<ProductVO> mostbestList(){
 			SqlSession ss = DBService.getFactory().openSession();

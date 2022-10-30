@@ -5,7 +5,7 @@
 <div class="card" style="width: 16rem; text-align: center;">
   <ul class="list-group list-group-flush">
     <li class="list-group-item">
-    <img alt="프로필사진" src="${pageContext.request.contextPath}/img/profileImg/${profileImg }" style="width: 80%; border-radius: 50%;"> <!-- 등록사진으로 불러오기 -->
+    <img alt="프로필사진" src="${pageContext.request.contextPath}/img/profileImg/${profileImg }" style="width: 80%; border-radius: 50%; aspect-ratio: 1/1;"> <!-- 등록사진으로 불러오기 -->
     </li>
     <li class="list-group-item">
     <h5 class="card-title" style="padding: 20px; font-weight: bold;">${id }</h5>

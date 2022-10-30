@@ -2,6 +2,8 @@
 <%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ page import="java.util.Date" %>
+<%@ page import="java.text.SimpleDateFormat" %>
  <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>    
   
 <!DOCTYPE html>
@@ -64,14 +66,19 @@
 
 <div class="container">
 <div class="row">
+<c:if test="${empty list }">
+			<div class="text-center col-12">
+     			<p style="color: gray; font-size: 0.9em;">결과가 존재하지 않습니다</p>
+     		</div>	
+</c:if>
 <div class="col-1"></div>
 <div class="col-11">
 <c:if test="${not empty list }">
 <div>
 <table style="width: 100%; margin: 0;">
 	<tr style="font-weight: bold;">
-		<td><a href="myquestions.do?id=${id }" style="color: #35C5F0;">나의 질문</a></td>
-		<td><a href="myanswer.do?id=${id }" style="color: black;">나의 답변</a></td>
+		<td><a href="#" style="color: #35C5F0;">나의 질문</a></td>
+		<td><a href="#" style="color: black;">나의 답변</a></td>
 		<td style="text-align: right;">
 		<button type="button" class="btn" id="btn" style="font-weight: bold;" onclick="location.href='request.do'">질문과답변 바로가기</button>
 		</td>
@@ -79,11 +86,6 @@
 </table>
 </div>
 <hr>
-<c:if test="${empty list }">
-			<div class="text-center col-12">
-     			<p style="color: gray; font-size: 0.9em;">결과가 존재하지 않습니다</p>
-     		</div>	
-</c:if>
 <c:forEach items="${list }" var="vo">
 
 
@@ -101,7 +103,7 @@
 	</tr>
 	<tr>
 		<td style="font-size: 0.9em; color: gray;">
-		<img src="${pageContext.request.contextPath}/img/profileImg/${profileImg }" alt="회원사진" width="25px;" style="border-radius: 50%; aspect-ratio: 1/1;">
+		<img src="${pageContext.request.contextPath}/img/profileImg/${profileImg }" alt="회원사진" width="25px;" style="border-radius: 50%;">
 		<span>${id}</span>
 		<span>${vo.regdate} ·</span>
 		<span>댓글  ·</span>

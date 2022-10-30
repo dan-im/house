@@ -47,6 +47,8 @@ public class OrderCompleteCommand implements Command {
 		int paymentType = Integer.parseInt(request.getParameter("paymentType"));
 		System.out.println("paymentType" + paymentType);
 		
+		int addPoint = Integer.parseInt(request.getParameter("addPoint"));
+		System.out.println("addPoint" + addPoint);
 		
 		//-----------------------------------------------------------
 		
@@ -59,6 +61,7 @@ public class OrderCompleteCommand implements Command {
 		ovo.setPaymentType(paymentType);
 		ovo.setPointUse(pointUse);
 		ovo.setTotPrice(totPrice);
+		ovo.setAddPoint(addPoint);
 		
 		CartDAO.insertOrder(ovo);
 		
@@ -77,6 +80,7 @@ public class OrderCompleteCommand implements Command {
 			pvo.setOrderNum(orderNum);
 		    pvo.setProductNum(vo.getProductNum());
 		    pvo.setCount(vo.getCount());
+		    pvo.setId(id);
 		    orderplist.add(pvo);
 		}
 		

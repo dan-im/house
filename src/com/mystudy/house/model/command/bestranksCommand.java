@@ -16,7 +16,7 @@ public class bestranksCommand implements Command {
 	@Override
 	public String exec(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		//1. DB연결하고 데이터 가져오기
-		List<ProductVO> list = ProductDAO.mostbestList();
+		List<ProductVO> list = ProductDAO.todaybestList();
 		
 		//2. 데이터를 응답할 페이지(list.jsp)에 전달
 		request.setAttribute("list", list);

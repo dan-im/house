@@ -1,7 +1,8 @@
 package com.mystudy.house.model.vo;
 
 public class RequestVO {
-	private String requestIdx, id, subject, regdate, views, comments, likes, fileName, oriName, ip, rNum;
+	private String requestIdx, id, subject, regdate, views, 
+	comments, likes, fileName, oriName, ip, rNum, myid;
 	
 	public String getrNum() {
 		return rNum;
@@ -89,6 +90,13 @@ public class RequestVO {
 
 	public void setIp(String ip) {
 		this.ip = ip;
+	}
+	public String getMyid() {
+		return myid;
+	}
+
+	public void setMyid(String myid) {
+		this.myid = myid;
 	}
 
 	@Override

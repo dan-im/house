@@ -45,12 +45,13 @@
 <div class="container-fluid">
 <%@ include file="/WEB-INF/store/store_slide.jspf" %>
 <br>
+<!--  
 <div>
 <b class="bordname"> 오늘의딜</b>
 <br>
-<%@ include file="/WEB-INF/store/store_ocard.jspf" %>
-
+include file="/WEB-INF/store/store_ocard.jspf" %>
 </div>
+-->
 
 <br><br>
 <b class="bordname"> 카테고리</b>

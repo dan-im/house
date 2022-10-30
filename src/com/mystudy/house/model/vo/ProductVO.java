@@ -8,6 +8,7 @@ public class ProductVO {
 	private String categoryDetail,	companyName, companyAddr,
 	companyPhone, companyEmail, crn, imagefile, categoryName;
 	private int shipping, productNum;
+	private String order;
 	
 	public int getCategoryNum() {
 		return categoryNum;
@@ -112,6 +113,14 @@ public class ProductVO {
 		this.productNum = productNum;
 	}
 	
+	//정렬추가
+	public String getOrder() {
+		return order;
+	}
+	public void setOrder(String order) {
+		this.order = order;
+	}
+	
 	@Override
 	public String toString() {
 		return "ProductVO [categoryNum=" + categoryNum + ", partnerNum=" + partnerNum + ", productName=" + productName
@@ -119,8 +128,7 @@ public class ProductVO {
 				+ sales + ", categoryDetail=" + categoryDetail + ", companyName=" + companyName + ", companyAddr="
 				+ companyAddr + ", companyPhone=" + companyPhone + ", companyEmail=" + companyEmail + ", crn=" + crn
 				+ ", imagefile=" + imagefile + ", categoryName=" + categoryName + ", shipping=" + shipping
-				+ ", productNum=" + productNum + "]";
+				+ ", productNum=" + productNum + ", order=" + order + "]";
 	}
-	
 
 }

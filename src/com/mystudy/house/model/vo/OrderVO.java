@@ -8,6 +8,7 @@ public class OrderVO {
 	private String regdate;
 	private int pointUse, paymentType;
 	private String shippingStatus;
+	private int addPoint;
 	
 	public int getOrderNum() {
 		return orderNum;
@@ -74,6 +75,12 @@ public class OrderVO {
 	}
 	public void setShippingStatus(String shippingStatus) {
 		this.shippingStatus = shippingStatus;
+	}
+	public int getAddPoint() {
+		return addPoint;
+	}
+	public void setAddPoint(int addPoint) {
+		this.addPoint = addPoint;
 	}
 	
 	@Override

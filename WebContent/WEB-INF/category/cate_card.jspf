@@ -27,12 +27,19 @@
 		  	<form name="frm" action="pdetail.do" method="post">
 				<div class="card" style="width: 16rem; height: 30rem;">
 				  <input type="image" src="${vo.imagefile }" class="card-img-top" alt="...">
-				  <div class="card-body">
+				  <div class="card-body" >
 				    <a class="company" href="#">${vo.companyName }</a> <!-- 회사이름 -->
 				    <p class="p_name">${vo.productName}</p> <!-- 제품명 -->
+				    <c:if test="${vo.stock == 0 }">
+				    <p class="p_price" style="font-size: 1.1em;">
+				    일시품절
+				    </p>
+				    </c:if>
+				    <c:if test="${vo.stock != 0 }">
 				    <p class="p_price">
 				    <fmt:formatNumber value="${vo.productPrice }" pattern="#,###" />
 				    </p>
+				    </c:if>
 				    <c:if test="${vo.shipping < vo.productPrice }">
 						<span class="badge badge-secondary">무료배송</span>
 					</c:if>

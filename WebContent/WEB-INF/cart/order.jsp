@@ -3,6 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>        
 <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 
 <!DOCTYPE html>
 <html>
@@ -72,6 +73,7 @@
  	font-weight: bold;
  }
  
+ 
   </style>
 </head>
 <body>
@@ -91,12 +93,61 @@
 <table style="width: 100%;">
 	<tr>
 		<td class="oname" style="padding: 0;">배송지</td>
-		<td style="padding:0; text-align: right;"><a href="#" style="font-weight: bold; color: #35C5F0;">변경</a></td>
+		<td style="padding:0; text-align: right;">
+		<span style="font-weight: bold; color: #35C5F0; cursor: pointer;" data-toggle="modal" data-target="#exampleModal${status.index }">변경</span></td>
 	</tr>
 </table>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal${status.index }" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content" style="padding: 30px;">
+      <div class=" text-center">
+        <p>배송정보 수정</p>
+        <hr>
+        <form class="pb-3" method="post" name="frm" action="orderAddr.do">
+           	<div class="form-group text-center">
+				<label for="name"><b>이름</b></label>
+				<input type="text" class="form-control w-50 m-auto" id="name" placeholder="이름" name="name" value="${list.get(0).name}">
+    		</div>
+    		<div class="form-group text-center">
+    			<label for="address"><b>주소</b></label>
+    			<input type="text" class="form-control w-50 m-auto" id="addr" placeholder="주소찾기" name="addr" onkeydown="return false" value="${list.get(0).addr}">
+    			<input type="text" class="form-control w-50 m-auto" id="addrDetail" placeholder="상세주소" name="addrDetail" value="${list.get(0).addrDetail}">
+    		</div>
+    		<div class="form-group text-center">
+    			<label for="phone"><b>전화번호</b></label>
+    			<input type="tel" class="form-control w-50 m-auto" id="phone" placeholder="전화번호" name="phone" value="${list.get(0).phone}">
+    		</div> 
+    		<input type="hidden" name="id" value="${id }"> 
+    		<input type="hidden" name="email" value="${list.get(0).email}"> 
+        
+        <button type="button" class="btn btn-outline-secondary" data-dismiss="modal" style="width: 110px;">취소</button>
+        <input type="submit" class="btn" id="btn" value="수정" style="width: 110px;">
+        </form>
+        <br>
+        </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <hr>
 <form name="thisForm" method="post">
-<p style="font-weight: 500; margin-bottom: 0">${list.get(0).addr }</p>
+<p style="font-weight: 500; margin-bottom: 0">${list.get(0).addr }&nbsp;${list.get(0).addrDetail }</p>
 <span style="color: gray; font-size: 0.9em;">${list.get(0).name }</span>&nbsp;<span style="color: gray; font-size: 0.9em;">${list.get(0).phone }</span>
 <br>
 
@@ -106,7 +157,7 @@
   <option value="배송 전에 미리 연락주세요">배송 전에 미리 연락주세요</option>
   <option value="부재시 경비실에 맡겨주세요">부재시 경비실에 맡겨주세요</option>
   <option value="4" id="self">직접 입력</option>
-<input type="text" class="form-control" placeholder="요청사항을 입력하세요" id="self_insert" style="width: 100%;">
+<input type="text" class="form-control" placeholder="요청사항을 입력하세요" id="self_insert" style="width: 100%;" onkeyup="orderR()">
 </select>
 
 
@@ -152,8 +203,8 @@
 </c:forEach>
 <p class="oname">포인트</p>
 <hr>
-<input type="text" id="point" name="point" value="0" onchange="chagepoint()" onkeyup='printpoint()' oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');">
-<button type="button" class="btn btn-sm" id="btn" onclick="pointuse()">전액사용</button>
+<input type="text" id="point" name="point" value="0" onkeyup='printpoint()' oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');">
+<button type="button" class="btn btn-sm" id="btn" onclick="pointuse()" onchange='printpoint()' >전액사용</button>
 <p>사용 가능 포인트 <span style="color: #35C5F0; font-weight: bold;">${list.get(0).point }<span>p</span></span></p>
 
 <br><br>
@@ -162,16 +213,16 @@
 <div class="card mb-3" style="width: 100%;">
   <div class="row no-gutters">
     <div class="col-md-6 text-center">
-      <img src="${pageContext.request.contextPath}/imgs/img_card.png" alt="카드" width="100px;">
+      <img src="${pageContext.request.contextPath}/imgs/img_card.png" alt="카드" width="100px;" onclick="payment(1)" style="cursor: pointer;">
       <p style="text-align: center; size: 0.8em; color: gray;">카드</p>
     </div>
     <div class="col-md-6 text-center">
-      <img src="${pageContext.request.contextPath}/imgs/img_vbank.png" alt="무통장입금" width="100px;">
+      <img src="${pageContext.request.contextPath}/imgs/img_vbank.png" alt="무통장입금" width="100px;" onclick="payment(2)" style="cursor: pointer;">
       <p style="text-align: center; size: 0.8em; color: gray;">무통장입금</p>
     </div>
   </div>
 </div>
-
+<p id="choice" style="color: gray; font-size: 0.8em; font-weight: bold;"></p>
 
     <c:set var="tott" value="${totalPrice+shipp}"/>
     <c:forEach var="vo" items="${list }">
@@ -206,12 +257,12 @@
     		</tr>
     		<tr>
     			<td style="text-align: left; padding: 0; color: gray;">포인트 사용</td>
-    			<script>
+    			<!-- <script>
     			function printpoint()  {
     				  const pointu = document.getElementById('point').value;
     				  document.getElementById("upoint").innerText = pointu;
     				}
-    			</script>
+    			</script> -->
     			<td style="text-align: right; padding: 0;"><span id="upoint">0</span><span>P</span></td>
     			
     			
@@ -239,7 +290,8 @@
     <input type="hidden" name="orderAddr" value="${list.get(0).addr}">
     <input type="hidden" name="totPrice" value="${totalPrice+shipp}" class="totalppp">
     <input type="hidden" name="pointUse" value="0" id="pointUse">
-    <input type="hidden" name="paymentType" value="1">
+    <input type="hidden" name="paymentType" value="0" id="paymentType">
+    <input type="hidden" name="addPoint" value="<fmt:parseNumber value="${pointp}" integerOnly="true" />">
     <c:set var="plist" value="${list }" scope="session" />
 </form>
   </ul>
@@ -255,6 +307,10 @@
 <script>
     function chk() {
         var f = document.thisForm;
+        if($('#paymentType').val() == 0){
+        	alert('결제수단을 선택하세요');
+        	return;
+        }
         if(f.pv_agree.checked!==true) {
             alert('필수항목에 체크해 주세요.');
         } else {
@@ -280,6 +336,7 @@
 		$('#orderRequest').on('change', function(){
 			if($("#orderRequest").val() == "4"){
 				$('#self_insert').show();
+				orderR();
 			}else{
 				$('#self_insert').hide();
 			}
@@ -308,8 +365,48 @@
 		var myPoint = ${list.get(0).point};
 		console.log(myPoint);
 		$('#point').val(myPoint);
-		var usepoint = document.getElementById('point').value;
+		var tott = ${totalPrice+shipp};
+		$('#pointUse').val($("#point").val());
+		$('.totalppp').html(tott - $("#point").val());
+		printpoint();
 	}
+	
+	function payment(a) {
+		$('#paymentType').val(a);
+		console.log($('#paymentType').val());
+		if(a==1){
+			$('#choice').html('결제수단 : 카드');
+		}
+		if(a==2){
+			$('#choice').html('결제수단 : 무통장입금');
+		}
+	}
+	
+	function printpoint()  {
+		  const pointu = document.getElementById('point').value;
+		  document.getElementById("upoint").innerText = pointu;
+		}
+	
+	function orderR() {
+		$('#self').val($('#self_insert').val());
+	}
+	
+	//주소변경
+	window.onload = function() {
+	document.getElementById("addr").addEventListener("click", function(){
+		new daum.Postcode({
+			oncomplete: function(data) {
+				document.getElementById("addr").value = data.address;
+				document.querySelector("input[name=addrDetail]").focus();
+			}
+		}).open();
+	});
+
+	document.getElementById("btn-upload").addEventListener("click", function(e){
+		e.preventDefault();
+		document.getElementById("file").click();
+	});
+}
 	
 </script>
 

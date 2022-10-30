@@ -76,7 +76,9 @@ h5 {
 	</c:if>
 	<br>
 	<div class="cate">
-		<a href="category.do?categoryNum=${vo.categoryNum}">${vo.categoryName }</a> <i class="bi bi-chevron-right"></i><a href="categorydt.do?categoryNum=${vo.categoryNum }&categoryDetail=${vo.categoryDetail}"> ${vo.categoryDetail }</a><br>
+		<a href="category.do?categoryNum=${vo.categoryNum}" style="color: black;">${vo.categoryName }</a> 
+		<i class="bi bi-chevron-right"></i>
+		<a href="categorydt.do?categoryNum=${vo.categoryNum }&categoryDetail=${vo.categoryDetail}" style="color: black;"> ${vo.categoryDetail }</a><br>
 		<br>
 	</div>
 		<div class="container mx-auto">
@@ -93,8 +95,13 @@ h5 {
 					<!-- 회사이름 -->
 					<p class="p_name">${vo.productName }</p>
 					<!-- 제품명 -->
+					<c:if test="${vo.stock == 0 }">
+					<span class="p_price" style="font-size: 1.3em;"> 일시품절 </span>
+					</c:if>
+					<c:if test="${vo.stock != 0 }">
 					<span class="p_price"> <fmt:formatNumber value="${vo.productPrice }" pattern="#,###" /> </span>
 					<span class="p_pricen"> 원</span>
+					</c:if>
 					<c:if test="${vo.shipping < vo.productPrice }">
 						<span class="badge badge-secondary">무료배송</span>
 					</c:if>
@@ -108,7 +115,7 @@ h5 {
 					<span>무료배송</span><br>	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 					</c:if>
 					<c:if test="${vo.shipping > vo.productPrice }">
-					<span>4000원</span><br>	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					<span>3000원</span><br>	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 					</c:if>
 					<span>(제주도/도서산간 지역 5,000원)</span><br>
 					<hr>
@@ -117,7 +124,7 @@ h5 {
 					<!-- ================== -->
 			<div class="content_right">
 
-  
+  <c:if test="${vo.stock != 0 }">
       <div class="qty">					
         <span class="minus"><a href="javascript:change_qty2('m')"><input type="button" value="-" style="border: none;"></a></span>
         <input type="text" class="ct_qty" id="ct_qty" value="1" readonly="readonly" style="border: none; background-color: #F6F6F6;">
@@ -128,6 +135,7 @@ h5 {
     <span style="font-size: 0.9em; font-weight: bold;">주문금액</span>
     <span class="total_amount" style="font-size: 1.5em; font-weight: bold; padding-left: 60%;"><fmt:formatNumber value="${vo.productPrice }" pattern="#,###" /></span>
     <span style="font-size: 1.1em; font-weight: bold;">원</span>
+ </c:if>   
 </div>
 
 <script>
@@ -179,7 +187,7 @@ function change_qty2(t){
   $("#it_pay").val(show_total_amount);
   $(".total_amount").html(show_total_amount.format());
   
-  $("#count").val(this_qty);
+  $(".count").val(this_qty);
 }
 
 
@@ -193,25 +201,69 @@ function change_qty2(t){
 		$('#frmm').submit();
 		</c:if>
 	}
+	
+	function OrderNow() {
+		<c:if test="${empty id }">
+		alert('주문하시려면 로그인하세요');
+		return false;
+		history.back();
+		</c:if>
+		<c:if test="${not empty id}">
+		$('#ordernow').submit();
+		</c:if>
+	}
+	
+	
+	
+	
 
 </script>
 					<!-- 여기수정중 -->
-					<form id="frmm" action="goCartInsert.do" method="post">
+					<c:if test="${vo.stock == 0 }">
+					<button type="button" class="btn btn-secondary btn-lg" disabled style="width: 500px;">품절되었습니다</button>
+					</c:if>
+					
+					<c:if test="${vo.stock != 0 }">
+					<form id="frmm" action="goCartInsert.do" method="post" style="display: inline;">
+					<input type="hidden" name="id" value="${id}">
 					<input type="hidden" name="id" value="${id}">
 					<input type="hidden" name="ProductNum" value="${vo.productNum}">
-					<input id="count" type="hidden" name="count" value="1"> <!-- count값 수정 -->
+					<input class="count" type="hidden" name="count" value="1"> <!-- count값 수정 -->
 					<input type="button" class="btn btn-outline-secondary btn-lg" style="width: 250px;" value="장바구니" onclick="CartInsert()">
-					<button type="button" class="btn btn-lg" id="btn" style="width: 250px;">바로구매</button>
 					</form>
+					<form id="ordernow" action="orderOne.do" method="post" style="display: inline;">
+					<input type="hidden" name="id" value="${id}">
+					<input class="count" type="hidden" name="count" value="1">
+					<input type="hidden" name="imagefile" value="${vo.imagefile}">
+					<input type="hidden" name="productNum" value="${vo.productNum}">
+					<input type="hidden" name="productPrice" value="${vo.productPrice}">
+					<input type="hidden" name="productName" value="${vo.productName}">
+					<input type="hidden" name="shipping" value="${vo.shipping}">
+					<input type="hidden" name="stock" value="${vo.stock}">
+					<input type="hidden" name="companyName" value="${vo.companyName}">
+					<input type="button" class="btn btn-lg" id="btn" style="width: 250px;" value="바로구매" onclick="OrderNow()">
+					</form>
+					</c:if>
 				</div>
 			</div>
 		</div>
 	<hr>
-	<ul id="nav2" class="nav justify-content-center bg-light">
-		<li class="nav-item"><a class="nav-link" href="#info">상품정보</a></li>
-		<li class="nav-item"><a class="nav-link" href="#rev">리뷰</a></li>
-		<li class="nav-item"><a class="nav-link" href="#qa">문의</a></li>
-		<li class="nav-item"><a class="nav-link" href="#partner">판매자정보</a></li>
+	<ul id="nav2" class="nav justify-content-center">
+		<li class="nav-item">
+		<a class="nav-link" href="#info" style="color: black; font-size: 1.1em; font-weight: bold;">
+		상품정보</a>
+		</li>
+		<li class="nav-item">
+		<a class="nav-link" href="#rev" style="color: black; font-size: 1.1em; font-weight: bold;">
+		리뷰</a>
+		</li>
+		<li class="nav-item">
+		<a class="nav-link" href="#qa" style="color: black; font-size: 1.1em; font-weight: bold;">
+		문의</a>
+		</li>
+		<li class="nav-item">
+		<a class="nav-link" href="#partner" style="color: black; font-size: 1.1em; font-weight: bold;">
+		판매자정보</a>
 		</li>
 	</ul>
 	<hr>
@@ -233,19 +285,18 @@ function change_qty2(t){
 	
 	
 	
-	
+	<br>
 	<p class="p_name"><a name="rev"></a>리뷰</p>
 	
-	<%@ include file="/WEB-INF/p_detail/detailReview.jspf" %>
-	
-	
+	리뷰뷰뷰ㅠ
+		
+	<br>
 	<p class="p_name"><a name="qa"></a>문의</p>
 	
 	ㅎㅇㅎㅇㅎㅎ
 	
 	
-	
-	
+	<br><br>
 	<p class="p_name"><a name="partner"></a>판매자정보</p>
 	
 	<table class="table" style="font-size: 0.9em; color: gray;">
@@ -301,11 +352,16 @@ function change_qty2(t){
 <form action="goCartInsert.do" method="post">
 	<input type="hidden" name="id" value="${id}">
 	<input type="hidden" name="ProductNum" value="${vo.productNum}">
-	<input id="count" type="hidden" name="count"> <!-- count값 수정 -->
+	<input class="count" type="hidden" name="count"> <!-- count값 수정 -->
 	<input type="button" class="btn btn-outline-secondary" style="width: 130px;" value="장바구니" onclick="CartInsert()">
+</form>
+<!-- 바로구매 -->
+<form action="order.do" method="post">
+	<input type="hidden" name="id" value="${id}">
+	<input type="hidden" name="ProductNum" value="${vo.productNum}">
+	<input class="count" type="hidden" name="count"> <!-- count값 수정 -->
 	<button type="button" class="btn" id="btn" style="width: 130px;">바로구매</button>
 </form>
-
 </div>
 </div>
 

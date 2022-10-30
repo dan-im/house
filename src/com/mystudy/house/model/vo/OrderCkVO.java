@@ -10,7 +10,7 @@ public class OrderCkVO {
 	private int stock;
 	private String companyName, imagefile;
 	private int shipping, gradeNum;
-	private String name, email, addr, phone;
+	private String name, email, addr, phone, addrDetail;
 	private int point;
 	private int totp;
 	
@@ -123,6 +123,12 @@ public class OrderCkVO {
 	}
 	public void setTotp(int totp) {
 		this.totp = totp;
+	}
+	public String getAddrDetail() {
+		return addrDetail;
+	}
+	public void setAddrDetail(String addrDetail) {
+		this.addrDetail = addrDetail;
 	}
 
 

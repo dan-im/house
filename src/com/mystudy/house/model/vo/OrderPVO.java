@@ -3,7 +3,8 @@ package com.mystudy.house.model.vo;
 public class OrderPVO {
 
 	int orderpNum, orderNum, productNum, count;
-
+	String id;
+	
 	public int getOrderpNum() {
 		return orderpNum;
 	}
@@ -34,6 +35,12 @@ public class OrderPVO {
 
 	public void setCount(int count) {
 		this.count = count;
+	}
+	public String getId() {
+		return id;
+	}
+	public void setId(String id) {
+		this.id = id;
 	}
 
 	@Override
