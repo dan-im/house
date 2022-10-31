@@ -48,6 +48,7 @@ public class OrderOneCommand implements Command {
 		vo.setCartNum(0);
 		vo.setAddr(user.getAddr());
 		vo.setAddrDetail(user.getAddrDetail());
+		vo.setEmail(user.getEmail());
 		vo.setCompanyName(id);
 		vo.setCount(count);
 		vo.setId(id);

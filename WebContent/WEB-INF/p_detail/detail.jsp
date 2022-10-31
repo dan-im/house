@@ -288,13 +288,18 @@ function change_qty2(t){
 	<br>
 	<p class="p_name"><a name="rev"></a>리뷰</p>
 	
-	리뷰뷰뷰ㅠ
+	<form action="#" method="post">
+	<input type="button" class="btn" id="btn" style="width: 100%; font-weight: bold;" value="해당상품 리뷰로 이동" onclick="#">
+	<input type="hidden" name="productNum" value="${vo.productNum }">
+	</form>
 		
-	<br>
+	<br><br>
 	<p class="p_name"><a name="qa"></a>문의</p>
 	
-	ㅎㅇㅎㅇㅎㅎ
-	
+	<form action="#" method="post">
+	<input type="button" class="btn" id="btn" style="width: 100%; font-weight: bold;" value="해당상품 문의로 이동" onclick="#">
+	<input type="hidden" name="productNum" value="${vo.productNum }">
+	</form>
 	
 	<br><br>
 	<p class="p_name"><a name="partner"></a>판매자정보</p>
@@ -349,23 +354,33 @@ function change_qty2(t){
   </div>
 </div>
 <br>
-<form action="goCartInsert.do" method="post">
+<c:if test="${vo.stock == 0 }">
+	<button type="button" class="btn btn-secondary btn-lg" disabled style="width: 260px;">품절되었습니다</button>
+</c:if>
+<c:if test="${vo.stock != 0 }">
+<form action="goCartInsert.do" method="post" style="display: inline;">
 	<input type="hidden" name="id" value="${id}">
 	<input type="hidden" name="ProductNum" value="${vo.productNum}">
 	<input class="count" type="hidden" name="count"> <!-- count값 수정 -->
 	<input type="button" class="btn btn-outline-secondary" style="width: 130px;" value="장바구니" onclick="CartInsert()">
 </form>
 <!-- 바로구매 -->
-<form action="order.do" method="post">
+<form action="order.do" method="post" style="display: inline;">
 	<input type="hidden" name="id" value="${id}">
-	<input type="hidden" name="ProductNum" value="${vo.productNum}">
-	<input class="count" type="hidden" name="count"> <!-- count값 수정 -->
-	<button type="button" class="btn" id="btn" style="width: 130px;">바로구매</button>
-</form>
-</div>
+	<input class="count" type="hidden" name="count" value="1">
+	<input type="hidden" name="imagefile" value="${vo.imagefile}">
+	<input type="hidden" name="productNum" value="${vo.productNum}">
+	<input type="hidden" name="productPrice" value="${vo.productPrice}">
+	<input type="hidden" name="productName" value="${vo.productName}">
+	<input type="hidden" name="shipping" value="${vo.shipping}">
+	<input type="hidden" name="stock" value="${vo.stock}">
+	<input type="hidden" name="companyName" value="${vo.companyName}">
+	<input type="button" class="btn" id="btn" style="width: 130px;" value="바로구매" onclick="OrderNow()">
+	</form>
+</c:if>
 </div>
 
-
+</div>
 
 </div>
 </div>	

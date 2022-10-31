@@ -61,12 +61,7 @@ function getCheckboxValue(event)  {
 
 
 <hr>
-<table style="width: 100%; text-align: right;">
-	<tr>
-		<td><span onclick="#" style="cursor: pointer; color: #35C5F0; font-weight: bold;" class="del">편집</span>
-		</td>
-	</tr>
-</table>
+<br>
 
 <%@ include file="/WEB-INF/mypage/collections_card.jspf" %>
 

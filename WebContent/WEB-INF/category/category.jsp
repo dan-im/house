@@ -312,20 +312,10 @@
 	<br>
 	<table style="width: 100%;">
 		<tr>
-			<td>전체 ${list.size() }개</td>
+			<td style="font-size: 0.9em; color: gray;">전체 ${list.size() }개</td>
 			<td style="text-align: right;">
 				<div class="btn-group">
-  <button type="button" class="btn dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-    인기순
-  </button>
-  <c:forEach var="vo" items="${list}">
-  <div class="dropdown-menu">
-    <a class="dropdown-item" href="#">인기순</a>
-    <a class="dropdown-item" href="#">낮은가격순</a>
-    <a class="dropdown-item" href="#">높은가격순</a>
-    <a class="dropdown-item" href="#">최신순</a>
-  </div>
-  </c:forEach>
+  
 </div>
 			</td>
 		</tr>
