@@ -603,15 +603,15 @@ SELECT PICTURE_IDX, ID, THUMBNAIL, SCRAP_CNT, C1_CNT, C2_CNT, LIKE_CNT FROM VW_P
 <!-- =================== 아이디로 내가 쓴 질문 조회 =========================== -->
 <select id="myRequest" parameterType="String" resultType="RequestVO">
 SELECT REQUEST_IDX, ID, SUBJECT, REGDATE, COMMENTS,
-FILENAME, ORINAME, IP, THUMBNAIL, VIEWS FROM REQUEST 
+FILENAME, ORINAME, VIEWS FROM REQUEST 
 WHERE ID = #{id} ORDER BY REGDATE DESC
 </select>
 
 <!-- =================== 아이디로 내가 쓴 답변글 조회 =========================== -->
 <select id="myAnswer" parameterType="String" resultType="RequestVO">
-SELECT REQUEST_IDX, ID, SUBJECT, REGDATE, COMMENTS, THUMBNAIL, VIEWS, MYID  FROM ANSWER
+SELECT REQUEST_IDX, ID, SUBJECT, REGDATE, COMMENTS, VIEWS, MYID  FROM ANSWER
 WHERE MYID = #{id}
-GROUP BY REQUEST_IDX, ID, SUBJECT, REGDATE, COMMENTS, THUMBNAIL, VIEWS, MYID
+GROUP BY REQUEST_IDX, ID, SUBJECT, REGDATE, COMMENTS, VIEWS, MYID
 </select>
 
 

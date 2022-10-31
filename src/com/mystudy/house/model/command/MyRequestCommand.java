@@ -29,7 +29,7 @@ public class MyRequestCommand implements Command {
 		
 		//3. 데이터를 응답할 페이지에 전달
 		request.setAttribute("list", list);
-		
+		System.out.println(list);
 		//4. 페이지 전환 - 응답할 페이지(questions.jsp)
 		
 		return "/WEB-INF/mypage/questions.jsp";

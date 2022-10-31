@@ -66,7 +66,6 @@
 <div class="row">
 <div class="col-1"></div>
 <div class="col-11">
-<c:if test="${not empty list }">
 <div>
 <table style="width: 100%; margin: 0;">
 	<tr style="font-weight: bold;">
@@ -84,6 +83,7 @@
      			<p style="color: gray; font-size: 0.9em;">결과가 존재하지 않습니다</p>
      		</div>	
 </c:if>
+<c:if test="${not empty list }">
 <c:forEach items="${list }" var="vo">
 
 
