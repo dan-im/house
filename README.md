@@ -40,15 +40,15 @@
 + **문의 게시판**: 제품문의(PRODUCTINQUIRY), 제품문의댓글(PRODUCTINQUIRY_COM)
 + **리뷰 게시판**: 리뷰(REVIEWS)
 
-## 맡은 기능
+## :raised_hand:맡은 기능 (해당 링크를 클릭 시 이동합니다)
 * **마이페이지**
-  * 작성한 게시글 확인
-  * 스크랩한 게시글 확인
+  * [작성한 게시글 조회](https://github.com/dan-im/house/tree/main/WebContent/WEB-INF/mypage)
+  * [스크랩한 게시글 조회](https://github.com/dan-im/house/tree/main/WebContent/WEB-INF/mypage#small_blue_diamond-%EC%8A%A4%ED%81%AC%EB%9E%A9%ED%95%9C-%EA%B2%8C%EC%8B%9C%EA%B8%80-%EC%A1%B0%ED%9A%8C)
 
 * **스토어**
-  * 스토어 메인 페이지
-  * 베스트상품 조회 
-  * 카테고리별 상품 조회
-  * 상품 상세페이지 
-  * 장바구니
-  * 결제페이지
+  * [스토어 메인 페이지](https://github.com/dan-im/house/tree/main/WebContent/WEB-INF/store)
+  * [베스트상품 조회](https://github.com/dan-im/house/tree/main/WebContent/WEB-INF/bestranks)
+  * [카테고리별 상품 조회](https://github.com/dan-im/house/tree/main/WebContent/WEB-INF/category)
+  * [상품 상세페이지](https://github.com/dan-im/house/tree/main/WebContent/WEB-INF/p_detail) 
+  * [장바구니](https://github.com/dan-im/house/tree/main/WebContent/WEB-INF/cart#%EC%9E%A5%EB%B0%94%EA%B5%AC%EB%8B%88)
+  * [결제페이지](https://github.com/dan-im/house/tree/main/WebContent/WEB-INF/cart#%EA%B2%B0%EC%A0%9C%ED%8E%98%EC%9D%B4%EC%A7%80)
